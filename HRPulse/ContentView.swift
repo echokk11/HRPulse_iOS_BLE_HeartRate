@@ -13,7 +13,7 @@ struct ContentView: View {
             ColorTheme.background
                 .ignoresSafeArea()
             
-            VStack(spacing: 40) {
+            VStack(spacing: 0) {
                 Spacer()
                 
                 // 心脏动画（包含脉冲波纹）
@@ -24,9 +24,13 @@ struct ContentView: View {
                     showPulseEffect: backgroundService.shouldShowPulseEffect,
                     isLowPowerMode: backgroundService.isLowPowerMode
                 )
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .aspectRatio(1, contentMode: .fit)
+                .padding(.horizontal, 20)
                 
                 // BPM 显示组件
                 BPMDisplayView(bpm: vm.bpm, isConnected: vm.isConnected)
+                    .padding(.top, -30)
                 
                 Spacer()
             }
@@ -159,95 +163,6 @@ struct ContentView: View {
         // 使用动画平滑过渡节奏变化
         withAnimation(.easeInOut(duration: 0.5)) {
             currentBeatDuration = newDuration
-        }
-    }
-}
-
-/// 错误状态显示视图
-private struct ErrorStateView: View {
-    let error: BluetoothError
-    let onOpenSettings: () -> Void
-    let onDismiss: () -> Void
-    
-    var body: some View {
-        VStack(spacing: 24) {
-            // 错误图标
-            Image(systemName: iconName)
-                .font(.system(size: 60))
-                .foregroundColor(.red.opacity(0.8))
-            
-            // 错误标题
-            Text(title)
-                .font(.title2)
-                .fontWeight(.bold)
-                .multilineTextAlignment(.center)
-            
-            // 错误描述
-            Text(error.localizedDescription)
-                .font(.body)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal)
-            
-            // 操作按钮
-            VStack(spacing: 12) {
-                if error.requiresUserAction {
-                    Button(action: onOpenSettings) {
-                        HStack {
-                            Image(systemName: "gear")
-                            Text("打开设置")
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(12)
-                    }
-                }
-                
-                Button(action: onDismiss) {
-                    Text(error.requiresUserAction ? "稍后处理" : "确定")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.gray.opacity(0.2))
-                        .foregroundColor(.primary)
-                        .cornerRadius(12)
-                }
-            }
-            .padding(.horizontal, 32)
-        }
-        .padding(32)
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(ColorTheme.background)
-                .shadow(radius: 20)
-        )
-        .padding(40)
-    }
-    
-    private var iconName: String {
-        switch error {
-        case .unauthorized:
-            return "lock.shield"
-        case .bluetoothOff:
-            return "antenna.radiowaves.left.and.right.slash"
-        case .unsupported:
-            return "exclamationmark.triangle"
-        default:
-            return "exclamationmark.circle"
-        }
-    }
-    
-    private var title: String {
-        switch error {
-        case .unauthorized:
-            return "需要蓝牙权限"
-        case .bluetoothOff:
-            return "蓝牙未开启"
-        case .unsupported:
-            return "不支持蓝牙"
-        default:
-            return "连接错误"
         }
     }
 }

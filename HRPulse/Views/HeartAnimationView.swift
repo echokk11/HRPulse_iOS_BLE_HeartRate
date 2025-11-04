@@ -19,8 +19,8 @@ struct HeartAnimationView: View {
             if isConnected && showPulseEffect && !isLowPowerMode && !reduceMotion {
                 ForEach(0..<3) { index in
                     Circle()
-                        .stroke(ColorTheme.pulseColor(for: colorScheme), lineWidth: 2)
-                        .frame(width: 120, height: 120)
+                        .stroke(ColorTheme.pulseColor(for: colorScheme), lineWidth: 3)
+                        .frame(width: 200, height: 200)
                         .scaleEffect(pulseScale)
                         .opacity(pulseOpacity)
                         .animation(
@@ -32,16 +32,13 @@ struct HeartAnimationView: View {
                 .drawingGroup() // 优化渲染性能
             }
             
-            // 心脏图标
+            // 心脏图标 - 使用固定大小，确保不被裁切
             Image(systemName: "heart.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 120, height: 120)
+                .font(.system(size: 200))
                 .scaleEffect(heartScale)
                 .animation(heartAnimation, value: isBeating)
                 .foregroundColor(isConnected ? ColorTheme.heartConnected(for: colorScheme) : ColorTheme.heartDisconnected)
                 .animation(.easeInOut(duration: 0.5), value: isConnected)
-                .drawingGroup() // 优化心脏图标渲染
                 .accessibilityLabel(accessibilityLabel)
                 .accessibilityValue(accessibilityValue)
         }
@@ -59,9 +56,9 @@ struct HeartAnimationView: View {
             // 减少动画模式：使用简单的淡入淡出，不缩放
             return 1.0
         } else if isConnected && isBeating {
-            return isLowPowerMode ? 1.08 : 1.12
+            return isLowPowerMode ? 1.06 : 1.10
         } else if isConnected {
-            return isLowPowerMode ? 0.92 : 0.88
+            return isLowPowerMode ? 0.94 : 0.90
         } else {
             return 1.0
         }

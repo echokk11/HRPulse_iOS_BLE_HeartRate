@@ -355,6 +355,31 @@ final class HRClient: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         // 连接失败也尝试重连
         attemptReconnection()
     }
+    
+    func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
+        // 恢复蓝牙状态（用于后台状态恢复）
+        print("🔄 恢复蓝牙状态")
+        
+        // 恢复外设连接
+        if let peripherals = dict[CBCentralManagerRestoredStatePeripheralsKey] as? [CBPeripheral] {
+            for peripheral in peripherals {
+                print("📱 恢复外设: \(peripheral.name ?? "未知设备")")
+                self.peripheral = peripheral
+                peripheral.delegate = self
+                
+                // 如果外设已连接，发现服务
+                if peripheral.state == .connected {
+                    onConnectionStateChange?(.connected)
+                    peripheral.discoverServices([heartRateService])
+                }
+            }
+        }
+        
+        // 恢复扫描状态
+        if let scanServices = dict[CBCentralManagerRestoredStateScanServicesKey] as? [CBUUID] {
+            print("🔍 恢复扫描服务: \(scanServices)")
+        }
+    }
 
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let error = error {

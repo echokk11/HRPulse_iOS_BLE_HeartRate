@@ -3,6 +3,8 @@ import SwiftUI
 /// 数字滚动动画修饰符，实现平滑的数字过渡效果
 struct AnimatableNumberModifier: AnimatableModifier {
     var number: Double
+    var fontSize: CGFloat
+    var fontWeight: Font.Weight
     
     var animatableData: Double {
         get { number }
@@ -11,6 +13,7 @@ struct AnimatableNumberModifier: AnimatableModifier {
     
     func body(content: Content) -> some View {
         Text("\(Int(number))")
+            .font(.system(size: fontSize, weight: fontWeight, design: .rounded))
     }
 }
 
@@ -22,18 +25,21 @@ struct BPMDisplayView: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 4) {
             Text("\(bpm)")
-                .font(.system(size: scaledFontSize(base: 72), weight: .bold, design: .rounded))
                 .foregroundColor(isConnected ? ColorTheme.bpmText : ColorTheme.disconnectedText)
-                .modifier(AnimatableNumberModifier(number: Double(bpm)))
+                .modifier(AnimatableNumberModifier(
+                    number: Double(bpm),
+                    fontSize: scaledFontSize(base: 100),
+                    fontWeight: .heavy
+                ))
                 .animation(.easeInOut(duration: 0.3), value: bpm)
                 .accessibilityLabel(accessibilityLabel)
                 .accessibilityValue("\(bpm) 每分钟心跳")
             
             Text("bpm")
-                .font(.system(size: scaledFontSize(base: 24), weight: .medium, design: .rounded))
-                .foregroundColor(isConnected ? ColorTheme.bpmText : ColorTheme.disconnectedText)
+                .font(.system(size: scaledFontSize(base: 20), weight: .medium, design: .rounded))
+                .foregroundColor(isConnected ? ColorTheme.secondaryText.opacity(0.6) : ColorTheme.disconnectedText.opacity(0.6))
                 .accessibilityHidden(true)
         }
         .drawingGroup() // 优化文本渲染性能
