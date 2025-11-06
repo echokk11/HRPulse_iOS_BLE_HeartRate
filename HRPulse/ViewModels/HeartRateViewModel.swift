@@ -13,9 +13,13 @@ final class HeartRateViewModel: ObservableObject {
     private let hrClient = HRClient.shared
     private var timeoutTimer: Timer?
     private let timeoutInterval: TimeInterval = 5.0 // 5秒超时
+    private var smoothedBPMValue: Double = 0
     
     /// 当前 BPM 值
     var bpm: Int {
+        if smoothedBPMValue > 0 {
+            return Int(smoothedBPMValue.rounded())
+        }
         return heartRateData?.bpm ?? 0
     }
     
@@ -92,6 +96,7 @@ final class HeartRateViewModel: ObservableObject {
         connectionState = .disconnected
         heartRateData = nil
         lastHeartbeatTime = nil
+        smoothedBPMValue = 0
         
         // 触发重连
         hrClient.reconnect()
@@ -121,6 +126,7 @@ final class HeartRateViewModel: ObservableObject {
             let newData = HeartRateData(bpm: bpm, rrInterval: rrInterval)
             self?.heartRateData = newData
             self?.lastHeartbeatTime = Date()
+            self?.applySmoothing(for: bpm)
             
             // 如果收到数据，确保状态为已连接
             if self?.connectionState != .connected {
@@ -141,6 +147,7 @@ final class HeartRateViewModel: ObservableObject {
             if state == .disconnected {
                 self?.heartRateData = nil
                 self?.lastHeartbeatTime = nil
+                self?.smoothedBPMValue = 0
             }
         }
     }
@@ -169,5 +176,17 @@ final class HeartRateViewModel: ObservableObject {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url)
         }
+    }
+}
+
+// MARK: - Smoothing
+private extension HeartRateViewModel {
+    func applySmoothing(for bpm: Int) {
+        if smoothedBPMValue == 0 {
+            smoothedBPMValue = Double(bpm)
+            return
+        }
+        let alpha = 0.35
+        smoothedBPMValue = smoothedBPMValue * (1 - alpha) + Double(bpm) * alpha
     }
 }

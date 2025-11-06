@@ -40,8 +40,14 @@ struct ColorTheme {
     /// BPM 数值文字颜色（自动适配）
     static let bpmText = Color.primary
     
+    /// 全局主文字颜色（自动适配）
+    static let textPrimary = Color.primary
+    
     /// 次要文字颜色（自动适配）
     static let secondaryText = Color.secondary
+    
+    /// 卡片描述、辅助控件使用的文字颜色
+    static let textSecondary = Color.secondary
     
     /// 断开连接时的文字颜色
     static let disconnectedText = Color.gray
@@ -53,4 +59,7 @@ struct ColorTheme {
     
     /// 次要背景颜色（自动适配）
     static let secondaryBackground = Color(UIColor.secondarySystemBackground)
+    
+    /// Accent 颜色，用于强调控件
+    static let accent = Color(red: 0.98, green: 0.25, blue: 0.38)
 }

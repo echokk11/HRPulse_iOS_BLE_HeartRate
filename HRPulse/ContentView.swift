@@ -3,10 +3,13 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var vm = HeartRateViewModel()
     @StateObject private var backgroundService = BackgroundService.shared
-    @State private var isBeating = false
-    @State private var currentBeatDuration: Double = 1.0
+    @State private var beatPhase = false
+    @State private var beatDuration: Double = 1.0
+    @State private var beatTimer: DispatchSourceTimer?
     @State private var showSettings = false
     @State private var showOnboarding = false
+    @State private var currentTime = Date()
+    private let clockTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
         ZStack {
@@ -14,15 +17,17 @@ struct ContentView: View {
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
+                clockView
+                    .padding(.top, 36)
+                    .padding(.bottom, 16)
+                
                 Spacer()
                 
-                // 心脏动画（包含脉冲波纹）
-                HeartAnimationView(
-                    isConnected: vm.isConnected,
-                    isBeating: isBeating,
-                    beatDuration: currentBeatDuration,
-                    showPulseEffect: backgroundService.shouldShowPulseEffect,
-                    isLowPowerMode: backgroundService.isLowPowerMode
+                // 心跳动画画廊（左右滑动切换五种风格）
+                HeartbeatGallery(
+                    bpm: vm.bpm,
+                    rrMs: vm.rrInterval,
+                    beatPhase: $beatPhase
                 )
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .aspectRatio(1, contentMode: .fit)
@@ -80,19 +85,23 @@ struct ContentView: View {
             }
             
             vm.startMonitoring()
-            startHeartbeat()
         }
-        .onChange(of: vm.heartRateData) { _ in
-            updateHeartbeatRhythm()
+        .onChange(of: vm.heartRateData) { data in
+            handleBeatEvent(with: data)
         }
         .onChange(of: vm.isConnected) { connected in
             if !connected {
-                // 断开连接时停止动画
-                isBeating = false
-            } else {
-                // 重新连接时恢复动画
-                startHeartbeat()
+                beatPhase = false
+                stopBeatTimer()
+            } else if let data = vm.heartRateData {
+                handleBeatEvent(with: data)
             }
+        }
+        .onReceive(clockTimer) { date in
+            currentTime = date
+        }
+        .onDisappear {
+            stopBeatTimer()
         }
         .alert("蓝牙错误", isPresented: $vm.showErrorAlert) {
             if let error = vm.bluetoothError {
@@ -117,53 +126,71 @@ struct ContentView: View {
         }
     }
 
-    /// 计算心跳持续时间（秒）
-    private func beatDuration() -> Double {
-        // 优先使用 RR-Interval 精确计算
-        if let rr = vm.rrInterval {
-            return max(0.2, min(1.5, rr / 1000.0))
+    /// 根据最新 RR/BPM 调整心跳节奏并触发下一次动画
+    private func handleBeatEvent(with data: HeartRateData?) {
+        guard vm.isConnected, let data else {
+            stopBeatTimer()
+            beatPhase = false
+            return
         }
-        // 否则根据 BPM 计算
-        if vm.bpm > 0 {
-            return max(0.3, min(1.5, 60.0 / Double(vm.bpm)))
-        }
-        return 1.0
+        beatDuration = computeBeatDuration(from: data)
+        triggerBeatPulse()
+        scheduleBeatTimer()
     }
     
-    /// 启动心跳动画
-    private func startHeartbeat() {
-        guard vm.isConnected else { return }
-        
-        currentBeatDuration = beatDuration()
-        isBeating = true
-        
-        // 根据帧率调整动画间隔
-        // 60 FPS: 正常间隔
-        // 30 FPS: 使用简化的动画时序
-        let frameRateMultiplier = backgroundService.currentFrameRate == 30 ? 1.2 : 1.0
-        let adjustedDuration = currentBeatDuration * frameRateMultiplier
-        
-        // 使用定时器驱动心跳节奏
-        DispatchQueue.main.asyncAfter(deadline: .now() + adjustedDuration) {
-            if vm.isConnected {
-                isBeating = false
-                DispatchQueue.main.asyncAfter(deadline: .now() + adjustedDuration * 0.1) {
-                    if vm.isConnected {
-                        startHeartbeat()
-                    }
-                }
-            }
+    private var formattedTime: String {
+        ContentView.clockFormatter.string(from: currentTime)
+    }
+    
+    private var clockView: some View {
+        Text(formattedTime)
+            .font(.system(size: 54, weight: .medium, design: .monospaced))
+            .foregroundStyle(ColorTheme.textPrimary)
+            .accessibilityLabel("当前时间")
+            .accessibilityValue(formattedTime)
+    }
+    
+    private static let clockFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss"
+        return formatter
+    }()
+    
+    private func computeBeatDuration(from data: HeartRateData) -> Double {
+        if let rr = data.rrInterval {
+            return clampDuration(rr / 1000.0)
+        }
+        let bpm = data.bpm > 0 ? data.bpm : vm.bpm
+        guard bpm > 0 else { return 1.0 }
+        return clampDuration(60.0 / Double(bpm))
+    }
+    
+    private func clampDuration(_ value: Double) -> Double {
+        return max(0.25, min(1.5, value))
+    }
+    
+    private func triggerBeatPulse() {
+        withAnimation(.easeInOut(duration: beatDuration * 0.35)) {
+            beatPhase.toggle()
         }
     }
     
-    /// 更新心跳节奏（平滑过渡）
-    private func updateHeartbeatRhythm() {
-        let newDuration = beatDuration()
-        
-        // 使用动画平滑过渡节奏变化
-        withAnimation(.easeInOut(duration: 0.5)) {
-            currentBeatDuration = newDuration
+    private func scheduleBeatTimer() {
+        stopBeatTimer()
+        let frameAdjust = backgroundService.currentFrameRate == 30 ? 1.2 : 1.0
+        let interval = max(0.25, beatDuration * frameAdjust)
+        let timer = DispatchSource.makeTimerSource(queue: .main)
+        timer.schedule(deadline: .now() + interval, repeating: interval)
+        timer.setEventHandler { [self] in
+            triggerBeatPulse()
         }
+        timer.resume()
+        beatTimer = timer
+    }
+    
+    private func stopBeatTimer() {
+        beatTimer?.cancel()
+        beatTimer = nil
     }
 }
 
