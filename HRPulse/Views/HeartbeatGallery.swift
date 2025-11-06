@@ -5,6 +5,7 @@ struct HeartbeatGallery: View {
     let bpm: Int
     let rrMs: Double?
     @Binding var beatPhase: Bool
+    let hasLiveData: Bool
     @State private var selection = 0
     
     private var beatDuration: Double {
@@ -16,48 +17,54 @@ struct HeartbeatGallery: View {
     
     var body: some View {
         TabView(selection: $selection) {
-            ScaleBeatView(beatPhase: $beatPhase, duration: beatDuration)
+            ScaleBeatView(beatPhase: $beatPhase, duration: beatDuration, color: primaryColor)
                 .tag(0)
-            RippleBeatView(beatPhase: $beatPhase, duration: beatDuration)
+            RippleBeatView(beatPhase: $beatPhase, duration: beatDuration, color: primaryColor)
                 .tag(1)
-            NeonBeatView(beatPhase: $beatPhase, duration: beatDuration)
+            NeonBeatView(beatPhase: $beatPhase, duration: beatDuration, color: primaryColor, hasLiveData: hasLiveData)
                 .tag(2)
-            EKGBeatView(beatPhase: $beatPhase, duration: beatDuration)
+            EKGBeatView(beatPhase: $beatPhase, duration: beatDuration, color: primaryColor)
                 .tag(3)
-            BarsBeatView(beatPhase: $beatPhase, duration: beatDuration)
+            BarsBeatView(beatPhase: $beatPhase, duration: beatDuration, color: primaryColor)
                 .tag(4)
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
         .padding(.vertical, 32)
         .padding(.horizontal, 12)
     }
+    
+    private var primaryColor: Color {
+        hasLiveData ? ColorTheme.accent : ColorTheme.heartDisconnected
+    }
 }
 
 struct ScaleBeatView: View {
     @Binding var beatPhase: Bool
     let duration: Double
+    let color: Color
     
     var body: some View {
         Image(systemName: "heart.fill")
             .resizable()
             .scaledToFit()
             .frame(width: 210, height: 210)
-            .foregroundStyle(ColorTheme.accent)
+            .foregroundStyle(color)
             .scaleEffect(beatPhase ? 1.12 : 0.92)
             .animation(.easeInOut(duration: duration), value: beatPhase)
-            .shadow(color: ColorTheme.accent.opacity(0.5), radius: beatPhase ? 18 : 6)
-    }
+            .shadow(color: color.opacity(0.5), radius: beatPhase ? 18 : 6)
+}
 }
 
 struct RippleBeatView: View {
     @Binding var beatPhase: Bool
     let duration: Double
+    let color: Color
     
     var body: some View {
         ZStack {
             ForEach(0..<3, id: \.self) { index in
                 Circle()
-                    .stroke(ColorTheme.accent.opacity(0.35 - Double(index) * 0.1), lineWidth: 6)
+                    .stroke(color.opacity(0.35 - Double(index) * 0.1), lineWidth: 6)
                     .frame(
                         width: beatPhase ? CGFloat(300 + index * 28) : CGFloat(110 + index * 28),
                         height: beatPhase ? CGFloat(300 + index * 28) : CGFloat(110 + index * 28)
@@ -72,7 +79,7 @@ struct RippleBeatView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 150, height: 150)
-                .foregroundStyle(ColorTheme.accent)
+                .foregroundStyle(color)
                 .scaleEffect(beatPhase ? 1.08 : 0.95)
                 .animation(.easeInOut(duration: duration * 0.9), value: beatPhase)
         }
@@ -83,14 +90,16 @@ struct RippleBeatView: View {
 struct NeonBeatView: View {
     @Binding var beatPhase: Bool
     let duration: Double
+    let color: Color
+    let hasLiveData: Bool
     
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 40, style: .continuous)
-                .fill(ColorTheme.accent.opacity(0.12))
+                .fill(color.opacity(0.12))
                 .frame(width: 300, height: 300)
                 .shadow(
-                    color: ColorTheme.accent.opacity(beatPhase ? 0.75 : 0.3),
+                    color: color.opacity(beatPhase ? 0.75 : 0.3),
                     radius: beatPhase ? 40 : 12,
                     x: 0,
                     y: 0
@@ -100,18 +109,18 @@ struct NeonBeatView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 170, height: 170)
-                .foregroundStyle(ColorTheme.accent)
+                .foregroundStyle(color)
                 .overlay(
                     Image(systemName: "heart")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 170, height: 170)
-                        .foregroundStyle(Color.white.opacity(0.65))
+                        .foregroundStyle(Color.white.opacity(hasLiveData ? 0.65 : 0.25))
                         .blur(radius: beatPhase ? 2 : 4)
                         .opacity(beatPhase ? 0.9 : 0.6)
                         .animation(.easeInOut(duration: duration), value: beatPhase)
                 )
-                .shadow(color: ColorTheme.accent.opacity(beatPhase ? 0.8 : 0.3), radius: beatPhase ? 30 : 8)
+                .shadow(color: color.opacity(beatPhase ? 0.8 : 0.3), radius: beatPhase ? 30 : 8)
         }
     }
 }
@@ -120,6 +129,7 @@ struct EKGBeatView: View {
     @Binding var beatPhase: Bool
     let duration: Double
     @State private var phase: CGFloat = 0
+    let color: Color
     
     var body: some View {
         ZStack {
@@ -127,10 +137,10 @@ struct EKGBeatView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 190, height: 190)
-                .foregroundStyle(ColorTheme.accent.opacity(0.2))
+                .foregroundStyle(color.opacity(0.2))
             EKGWave(phase: phase)
                 .stroke(
-                    ColorTheme.accent,
+                    color,
                     style: StrokeStyle(lineWidth: 6, lineCap: .round, lineJoin: .round)
                 )
                 .frame(width: 300, height: 140)
@@ -176,12 +186,13 @@ struct BarsBeatView: View {
     @Binding var beatPhase: Bool
     let duration: Double
     private let barCount = 9
+    let color: Color
     
     var body: some View {
         HStack(alignment: .bottom, spacing: 8) {
             ForEach(0..<barCount, id: \.self) { _ in
                 Capsule()
-                    .fill(ColorTheme.accent)
+                    .fill(color)
                     .frame(
                         width: 14,
                         height: beatPhase ? CGFloat.random(in: 60...180) : CGFloat.random(in: 28...100)
@@ -198,12 +209,12 @@ struct BarsBeatView: View {
         .padding(.vertical, 28)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(ColorTheme.accent.opacity(0.1))
+                .fill(color.opacity(0.1))
         )
     }
 }
 
 #Preview("Heartbeat Gallery") {
-    HeartbeatGallery(bpm: 78, rrMs: 780, beatPhase: .constant(true))
+    HeartbeatGallery(bpm: 78, rrMs: 780, beatPhase: .constant(true), hasLiveData: true)
         .background(Color.black.opacity(0.05))
 }

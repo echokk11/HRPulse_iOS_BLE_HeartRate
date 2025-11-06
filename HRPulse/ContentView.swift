@@ -31,7 +31,8 @@ struct ContentView: View {
                 HeartbeatGallery(
                     bpm: vm.bpm,
                     rrMs: vm.rrInterval,
-                    beatPhase: $beatPhase
+                    beatPhase: $beatPhase,
+                    hasLiveData: hasLiveHeartData
                 )
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .aspectRatio(1, contentMode: .fit)
@@ -174,6 +175,10 @@ struct ContentView: View {
         formatter.dateFormat = "HH:mm:ss"
         return formatter
     }()
+    
+    private var hasLiveHeartData: Bool {
+        vm.heartRateData != nil && vm.bpm > 0
+    }
     
     private func computeBeatDuration(from data: HeartRateData) -> Double {
         if let rr = data.rrInterval {
