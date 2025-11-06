@@ -9,6 +9,7 @@ struct ContentView: View {
     @State private var showSettings = false
     @State private var showOnboarding = false
     @State private var currentTime = Date()
+    @State private var appSettings = AppSettings.load()
     private let clockTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
@@ -37,6 +38,14 @@ struct ContentView: View {
                 BPMDisplayView(bpm: vm.bpm, isConnected: vm.isConnected)
                     .padding(.top, -30)
                 
+                AerobicZoneView(
+                    bpm: vm.bpm,
+                    age: appSettings.age,
+                    isConnected: vm.isConnected
+                )
+                .padding(.horizontal, 20)
+                .padding(.top, 20)
+                
                 Spacer()
             }
         }
@@ -48,7 +57,7 @@ struct ContentView: View {
         .accessibilityHint("轻触屏幕打开设置")
         .accessibilityAddTraits(.isButton)
         .sheet(isPresented: $showSettings) {
-            SettingsView(backgroundService: backgroundService)
+            SettingsView(backgroundService: backgroundService, appSettings: $appSettings)
         }
         .overlay {
             if showOnboarding {
@@ -76,8 +85,8 @@ struct ContentView: View {
         }
         .onAppear {
             // 检查是否需要显示首次引导
-            let settings = AppSettings.load()
-            if !settings.hasSeenOnboarding {
+            appSettings = AppSettings.load()
+            if !appSettings.hasSeenOnboarding {
                 // 延迟 0.5 秒显示引导，让主界面先加载
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     showOnboarding = true

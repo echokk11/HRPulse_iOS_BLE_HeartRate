@@ -22,6 +22,7 @@
 		1F1B3A9C2C0A000300000006 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3A9D2C0A000300000006 /* OnboardingView.swift */; };
 		1F1B3A9E2C0A000300000007 /* BackgroundService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3A9F2C0A000300000007 /* BackgroundService.swift */; };
 		1F1B3AA32C0A000300000008 /* ErrorStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3AA42C0A000300000008 /* ErrorStateView.swift */; };
+		1F1B3AB82C0A00030000000A /* AerobicZoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3AB72C0A00030000000A /* AerobicZoneView.swift */; };
 		1F1B3AB62C0A000300000009 /* HeartbeatGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3AB52C0A000300000009 /* HeartbeatGallery.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,7 @@
 		1F1B3A9D2C0A000300000006 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		1F1B3A9F2C0A000300000007 /* BackgroundService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundService.swift; sourceTree = "<group>"; };
 		1F1B3AA42C0A000300000008 /* ErrorStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorStateView.swift; sourceTree = "<group>"; };
+		1F1B3AB72C0A00030000000A /* AerobicZoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AerobicZoneView.swift; sourceTree = "<group>"; };
 		1F1B3AB52C0A000300000009 /* HeartbeatGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartbeatGallery.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -112,6 +114,7 @@
 			children = (
 				1F1B3A972C0A000300000003 /* HeartAnimationView.swift */,
 				1F1B3AB52C0A000300000009 /* HeartbeatGallery.swift */,
+				1F1B3AB72C0A00030000000A /* AerobicZoneView.swift */,
 				1F1B3A992C0A000300000004 /* BPMDisplayView.swift */,
 				1F1B3A9B2C0A000300000005 /* SettingsView.swift */,
 				1F1B3A9D2C0A000300000006 /* OnboardingView.swift */,
@@ -204,6 +207,7 @@
 				1F1B3A922C0A000300000001 /* AppSettings.swift in Sources */,
 				1F1B3A942C0A000300000002 /* ColorTheme.swift in Sources */,
 				1F1B3A962C0A000300000003 /* HeartAnimationView.swift in Sources */,
+				1F1B3AB82C0A00030000000A /* AerobicZoneView.swift in Sources */,
 				1F1B3AB62C0A000300000009 /* HeartbeatGallery.swift in Sources */,
 				1F1B3A982C0A000300000004 /* BPMDisplayView.swift in Sources */,
 				1F1B3A9A2C0A000300000005 /* SettingsView.swift in Sources */,

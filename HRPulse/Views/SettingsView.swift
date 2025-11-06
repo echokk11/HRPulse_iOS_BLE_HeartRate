@@ -4,6 +4,7 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var backgroundService: BackgroundService
+    @Binding var appSettings: AppSettings
     @State private var keepScreenAwake: Bool = false
     
     var body: some View {
@@ -32,6 +33,18 @@ struct SettingsView: View {
                     Text("显示")
                 } footer: {
                     Text("防止屏幕自动锁定，可能增加电池消耗")
+                }
+                
+                Section {
+                    Stepper(value: $appSettings.age, in: 16...85, step: 1) {
+                        Text("年龄 \(appSettings.age) 岁")
+                    }
+                    .accessibilityLabel("年龄设置")
+                    .accessibilityHint("用于计算最佳有氧心率区间")
+                } header: {
+                    Text("个人参数")
+                } footer: {
+                    Text("将根据年龄自动估算最佳有氧心率区间")
                 }
                 
                 // 关于信息
@@ -69,6 +82,9 @@ struct SettingsView: View {
             // 加载当前屏幕常亮状态
             keepScreenAwake = UIApplication.shared.isIdleTimerDisabled
         }
+        .onChange(of: appSettings.age) { _ in
+            appSettings.save()
+        }
     }
     
     // MARK: - App Version Info
@@ -83,5 +99,5 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView(backgroundService: BackgroundService.shared)
+    SettingsView(backgroundService: BackgroundService.shared, appSettings: .constant(AppSettings()))
 }
