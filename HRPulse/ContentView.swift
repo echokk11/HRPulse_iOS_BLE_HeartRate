@@ -10,11 +10,14 @@ struct ContentView: View {
     @State private var showOnboarding = false
     @State private var currentTime = Date()
     @State private var appSettings = AppSettings.load()
+    @State private var isInAerobicZone = false
     private let clockTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
         ZStack {
             ColorTheme.background
+                .ignoresSafeArea()
+            ChargingWaveView(isActive: isInAerobicZone)
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
@@ -94,9 +97,11 @@ struct ContentView: View {
             }
             
             vm.startMonitoring()
+            updateAerobicZoneState()
         }
         .onChange(of: vm.heartRateData) { data in
             handleBeatEvent(with: data)
+            updateAerobicZoneState()
         }
         .onChange(of: vm.isConnected) { connected in
             if !connected {
@@ -105,12 +110,16 @@ struct ContentView: View {
             } else if let data = vm.heartRateData {
                 handleBeatEvent(with: data)
             }
+            updateAerobicZoneState()
         }
         .onReceive(clockTimer) { date in
             currentTime = date
         }
         .onDisappear {
             stopBeatTimer()
+        }
+        .onChange(of: appSettings.age) { _ in
+            updateAerobicZoneState()
         }
         .alert("蓝牙错误", isPresented: $vm.showErrorAlert) {
             if let error = vm.bluetoothError {
@@ -145,6 +154,7 @@ struct ContentView: View {
         beatDuration = computeBeatDuration(from: data)
         triggerBeatPulse()
         scheduleBeatTimer()
+        updateAerobicZoneState()
     }
     
     private var formattedTime: String {
@@ -201,6 +211,23 @@ struct ContentView: View {
         beatTimer?.cancel()
         beatTimer = nil
     }
+    
+    private func updateAerobicZoneState() {
+        guard vm.isConnected, vm.bpm > 0 else {
+            isInAerobicZone = false
+            return
+        }
+        let maxHR = clampMaxHeartRate(208.0 - 0.7 * Double(appSettings.age))
+        let lower = maxHR * 0.6
+        let upper = maxHR * 0.75
+        let current = Double(vm.bpm)
+        isInAerobicZone = current >= lower && current <= upper
+    }
+    
+    private func clampMaxHeartRate(_ value: Double) -> Double {
+        return max(120, min(205, value))
+    }
+    
 }
 
 #Preview("Light Mode") {
