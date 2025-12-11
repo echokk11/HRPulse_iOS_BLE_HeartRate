@@ -1,0 +1,328 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1F1B3A7C2C0A000100000001 /* HRPulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3A6E2C0A000100000001 /* HRPulse.swift */; };
+		1F1B3A7D2C0A000100000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3A6F2C0A000100000001 /* ContentView.swift */; };
+		1F1B3A7E2C0A000100000001 /* HRClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3A702C0A000100000001 /* HRClient.swift */; };
+		1F1B3A832C0A000100000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F1B3A712C0A000100000001 /* Assets.xcassets */; };
+		1F1B3A8F2C0A000200000001 /* HeartRateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3A8D2C0A000200000001 /* HeartRateData.swift */; };
+		1F1B3A902C0A000200000001 /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3A8E2C0A000200000001 /* ConnectionState.swift */; };
+		1F1B3A912C0A000200000001 /* HeartRateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3A8C2C0A000200000001 /* HeartRateViewModel.swift */; };
+		1F1B3A922C0A000300000001 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3A932C0A000300000001 /* AppSettings.swift */; };
+		1F1B3A942C0A000300000002 /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3A952C0A000300000002 /* ColorTheme.swift */; };
+		1F1B3A962C0A000300000003 /* HeartAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3A972C0A000300000003 /* HeartAnimationView.swift */; };
+		1F1B3A982C0A000300000004 /* BPMDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3A992C0A000300000004 /* BPMDisplayView.swift */; };
+		1F1B3A9A2C0A000300000005 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3A9B2C0A000300000005 /* SettingsView.swift */; };
+		1F1B3A9C2C0A000300000006 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3A9D2C0A000300000006 /* OnboardingView.swift */; };
+		1F1B3A9E2C0A000300000007 /* BackgroundService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3A9F2C0A000300000007 /* BackgroundService.swift */; };
+		1F1B3AA32C0A000300000008 /* ErrorStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3AA42C0A000300000008 /* ErrorStateView.swift */; };
+		1F1B3AA52C0A00030000000A /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3AA62C0A00030000000A /* HealthKitService.swift */; };
+		1F1B3AB62C0A000300000009 /* HeartbeatGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3AB52C0A000300000009 /* HeartbeatGallery.swift */; };
+		1F1B3AB82C0A00030000000A /* AerobicZoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3AB72C0A00030000000A /* AerobicZoneView.swift */; };
+		1F1B3ABA2C0A00030000000B /* ChargingWaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3AB92C0A00030000000B /* ChargingWaveView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1F1B3A6E2C0A000100000001 /* HRPulse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HRPulse.swift; sourceTree = "<group>"; };
+		1F1B3A6F2C0A000100000001 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		1F1B3A702C0A000100000001 /* HRClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HRClient.swift; sourceTree = "<group>"; };
+		1F1B3A712C0A000100000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1F1B3A722C0A000100000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1F1B3A7A2C0A000100000001 /* HRPulse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HRPulse.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F1B3A8C2C0A000200000001 /* HeartRateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateViewModel.swift; sourceTree = "<group>"; };
+		1F1B3A8D2C0A000200000001 /* HeartRateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateData.swift; sourceTree = "<group>"; };
+		1F1B3A8E2C0A000200000001 /* ConnectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
+		1F1B3A932C0A000300000001 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		1F1B3A952C0A000300000002 /* ColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
+		1F1B3A972C0A000300000003 /* HeartAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartAnimationView.swift; sourceTree = "<group>"; };
+		1F1B3A992C0A000300000004 /* BPMDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMDisplayView.swift; sourceTree = "<group>"; };
+		1F1B3A9B2C0A000300000005 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		1F1B3A9D2C0A000300000006 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		1F1B3A9F2C0A000300000007 /* BackgroundService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundService.swift; sourceTree = "<group>"; };
+		1F1B3AA42C0A000300000008 /* ErrorStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorStateView.swift; sourceTree = "<group>"; };
+		1F1B3AA62C0A00030000000A /* HealthKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitService.swift; sourceTree = "<group>"; };
+		1F1B3AB52C0A000300000009 /* HeartbeatGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartbeatGallery.swift; sourceTree = "<group>"; };
+		1F1B3AB72C0A00030000000A /* AerobicZoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AerobicZoneView.swift; sourceTree = "<group>"; };
+		1F1B3AB92C0A00030000000B /* ChargingWaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChargingWaveView.swift; sourceTree = "<group>"; };
+		1F1B3AC12C0A00030000000C /* HRPulse.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HRPulse.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1F1B3A772C0A000100000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1F1B3A682C0A000100000001 = {
+			isa = PBXGroup;
+			children = (
+				1F1B3A6B2C0A000100000001 /* HRPulse */,
+				1F1B3A7B2C0A000100000001,
+			);
+			sourceTree = "<group>";
+		};
+		1F1B3A6B2C0A000100000001 /* HRPulse */ = {
+			isa = PBXGroup;
+			children = (
+				1F1B3A6E2C0A000100000001 /* HRPulse.swift */,
+				1F1B3A6F2C0A000100000001 /* ContentView.swift */,
+				1F1B3A702C0A000100000001 /* HRClient.swift */,
+				1F1B3A8A2C0A000200000001 /* Models */,
+				1F1B3A8B2C0A000200000001 /* ViewModels */,
+				1F1B3AA02C0A000300000008 /* Views */,
+				1F1B3AA12C0A000300000009 /* Services */,
+				1F1B3A712C0A000100000001 /* Assets.xcassets */,
+				1F1B3A722C0A000100000001 /* Info.plist */,
+				1F1B3AC12C0A00030000000C /* HRPulse.entitlements */,
+			);
+			path = HRPulse;
+			sourceTree = "<group>";
+		};
+		1F1B3A7B2C0A000100000001 = {
+			isa = PBXGroup;
+			children = (
+				1F1B3A7A2C0A000100000001 /* HRPulse.app */,
+			);
+			sourceTree = "<group>";
+		};
+		1F1B3A8A2C0A000200000001 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1F1B3A8D2C0A000200000001 /* HeartRateData.swift */,
+				1F1B3A8E2C0A000200000001 /* ConnectionState.swift */,
+				1F1B3A932C0A000300000001 /* AppSettings.swift */,
+				1F1B3A952C0A000300000002 /* ColorTheme.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1F1B3A8B2C0A000200000001 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				1F1B3A8C2C0A000200000001 /* HeartRateViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		1F1B3AA02C0A000300000008 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1F1B3A972C0A000300000003 /* HeartAnimationView.swift */,
+				1F1B3AB52C0A000300000009 /* HeartbeatGallery.swift */,
+				1F1B3AB72C0A00030000000A /* AerobicZoneView.swift */,
+				1F1B3AB92C0A00030000000B /* ChargingWaveView.swift */,
+				1F1B3A992C0A000300000004 /* BPMDisplayView.swift */,
+				1F1B3A9B2C0A000300000005 /* SettingsView.swift */,
+				1F1B3A9D2C0A000300000006 /* OnboardingView.swift */,
+				1F1B3AA42C0A000300000008 /* ErrorStateView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1F1B3AA12C0A000300000009 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1F1B3A9F2C0A000300000007 /* BackgroundService.swift */,
+				1F1B3AA62C0A00030000000A /* HealthKitService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1F1B3A792C0A000100000001 /* HRPulse */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1F1B3A862C0A000100000001 /* Build configuration list for PBXNativeTarget "HRPulse" */;
+			buildPhases = (
+				1F1B3A762C0A000100000001 /* Sources */,
+				1F1B3A772C0A000100000001 /* Frameworks */,
+				1F1B3A782C0A000100000001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HRPulse;
+			productName = HRPulse;
+			productReference = 1F1B3A7A2C0A000100000001 /* HRPulse.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1F1B3A692C0A000100000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					1F1B3A792C0A000100000001 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = 1F1B3A6A2C0A000100000001 /* Build configuration list for PBXProject "HRPulse" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1F1B3A682C0A000100000001;
+			productRefGroup = 1F1B3A7B2C0A000100000001;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1F1B3A792C0A000100000001 /* HRPulse */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1F1B3A782C0A000100000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F1B3A832C0A000100000001 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1F1B3A762C0A000100000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F1B3A7C2C0A000100000001 /* HRPulse.swift in Sources */,
+				1F1B3A7D2C0A000100000001 /* ContentView.swift in Sources */,
+				1F1B3A7E2C0A000100000001 /* HRClient.swift in Sources */,
+				1F1B3A8F2C0A000200000001 /* HeartRateData.swift in Sources */,
+				1F1B3A902C0A000200000001 /* ConnectionState.swift in Sources */,
+				1F1B3A912C0A000200000001 /* HeartRateViewModel.swift in Sources */,
+				1F1B3A922C0A000300000001 /* AppSettings.swift in Sources */,
+				1F1B3A942C0A000300000002 /* ColorTheme.swift in Sources */,
+				1F1B3A962C0A000300000003 /* HeartAnimationView.swift in Sources */,
+				1F1B3AB82C0A00030000000A /* AerobicZoneView.swift in Sources */,
+				1F1B3AB62C0A000300000009 /* HeartbeatGallery.swift in Sources */,
+				1F1B3ABA2C0A00030000000B /* ChargingWaveView.swift in Sources */,
+				1F1B3A982C0A000300000004 /* BPMDisplayView.swift in Sources */,
+				1F1B3A9A2C0A000300000005 /* SettingsView.swift in Sources */,
+				1F1B3A9C2C0A000300000006 /* OnboardingView.swift in Sources */,
+				1F1B3A9E2C0A000300000007 /* BackgroundService.swift in Sources */,
+				1F1B3AA52C0A00030000000A /* HealthKitService.swift in Sources */,
+				1F1B3AA32C0A000300000008 /* ErrorStateView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1F1B3A842C0A000100000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = HRPulse/HRPulse.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = HRPulse/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen = "{}";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.HRPulse;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		1F1B3A852C0A000100000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = HRPulse/HRPulse.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = HRPulse/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen = "{}";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.HRPulse;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1F1B3A6A2C0A000100000001 /* Build configuration list for PBXProject "HRPulse" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F1B3A842C0A000100000001 /* Debug */,
+				1F1B3A852C0A000100000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1F1B3A862C0A000100000001 /* Build configuration list for PBXNativeTarget "HRPulse" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F1B3A842C0A000100000001 /* Debug */,
+				1F1B3A852C0A000100000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1F1B3A692C0A000100000001 /* Project object */;
+}
